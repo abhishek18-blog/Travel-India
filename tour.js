@@ -1,4 +1,3 @@
-import './style.css';
 import { renderNavbar } from './navbar.js';
 
 
