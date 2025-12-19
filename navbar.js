@@ -1,4 +1,3 @@
-import './style.css';
 
 export function renderNavbar() {
   return `
