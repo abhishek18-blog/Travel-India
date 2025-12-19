@@ -1,4 +1,3 @@
-import './style.css';
 import { destinations } from './tour.js';
 import { renderNavbar } from './navbar.js';
 
