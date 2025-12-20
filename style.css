@@ -62,3 +62,10 @@
   opacity: 1;
   transform: translateY(0);
 }
+/* Add this to the bottom of your style.css */
+h1 {
+  font-family: 'Anton', sans-serif !important;
+  line-height: 0.8 !important; /* This pulls the words "TRAVEL" and "INDIA" closer together */
+  letter-spacing: -0.05em !important; /* This tightens the horizontal space between letters */
+  text-transform: uppercase;
+}
