@@ -29,12 +29,9 @@ export function renderHome() {
             Discover the Heritage
           </p>
         </div>
-        <h1 class="font-['Anton'] text-7xl sm:text-8xl md:text-[12vw] leading-[0.85] font-bold tracking-tighter text-white drop-shadow-2xl uppercase animate-reveal">
-          TRAVEL
-        </h1>
-        <h1 class="font-['Anton'] text-7xl sm:text-8xl md:text-[12vw] leading-[0.85] font-bold tracking-tighter text-white drop-shadow-2xl uppercase animate-reveal delay-200">
-          INDIA
-        </h1>
+        <h1 class="text-8xl md:text-9xl font-bold leading-[0.8] tracking-tighter">
+  TRAVEL <br> INDIA
+</h1>
         <div class="mx-auto max-w-2xl mt-6 md:mt-8 px-4">
           <p class="text-base md:text-2xl font-light leading-relaxed text-white/90 drop-shadow-lg italic">
             "The land of diversity, where every mile tells a story."
