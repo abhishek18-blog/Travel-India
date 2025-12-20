@@ -1,3 +1,4 @@
+import './style.css';
 import { renderHome } from './home.js';
 import { renderTours } from './tour.js';
 import { renderBooking } from './booking.js';
