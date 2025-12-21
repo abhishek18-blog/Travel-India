@@ -206,8 +206,8 @@ export function renderTours() {
           <img src="${tour.image}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
           
           <div class="absolute top-8 left-8">
-            <div id="weather-${tour.id}" class="backdrop-blur-xl bg-white/20 border border-white/30 px-4 py-1.5 rounded-full shadow-lg">
-              <span class="text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
+            <div id="weather-${tour.id}" class="backdrop-blur-md bg-white border border-slate-200 px-4 py-1.5 rounded-full shadow-lg">
+              <span class="text-slate-900 text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
                 🌡️ Loading...
               </span>
             </div>
