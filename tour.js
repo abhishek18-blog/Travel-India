@@ -1,6 +1,6 @@
 import { renderNavbar } from './navbar.js';
 
-// 1. DATA UPDATED: Added 'location' for API search
+// 1. DATA: Added 'location' for API search
 export const destinations = [
   {
     id: 1,
@@ -105,7 +105,7 @@ export const destinations = [
   {
     id: 11,
     name:"Kaziranga National Park, Assam",
-    location: "Assam",
+    location: "Kanchanjuri",
     price: "₹19,800",
     duration: "2 Days / 1 Night",
     description: "Home to the largest population of the one-horned Indian rhinoceros.",
@@ -140,6 +140,15 @@ async function getWeather(city) {
   }
 }
 
+// 3. HELPER: Create Recommendation Badge
+function injectSmartBadge(container, text, colorClass) {
+  const badge = document.createElement('div');
+  // Positioned bottom-left of the image area
+  badge.className = `absolute bottom-8 left-8 ${colorClass} text-white text-[10px] font-black uppercase px-4 py-1.5 rounded-full shadow-2xl animate-bounce z-20`;
+  badge.innerText = text;
+  container.appendChild(badge);
+}
+
 export function renderTours() {
   const app = document.querySelector('#app');
   if (!app) return;
@@ -152,8 +161,7 @@ export function renderTours() {
         <section class="relative bg-slate-900 py-32 px-6 overflow-hidden min-h-[60vh] flex items-center">
             <div class="absolute inset-0 z-0">
                 <img src="https://i0.wp.com/ambrishgupta.wordpress.com/wp-content/uploads/2020/05/unesco-world-heritage-sites-india.jpg?w=1200&h=600&ssl=1" 
-                     class="w-full h-full object-cover opacity-50" 
-                     alt="Heritage Packages Background" />
+                     class="w-full h-full object-cover opacity-50" />
                 <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px]"></div>
             </div>
 
@@ -166,15 +174,9 @@ export function renderTours() {
                 </h2>
                 <div class="max-w-3xl animate-reveal delay-200 mt-12">
                     <div class="group relative flex items-center bg-white/5 backdrop-blur-2xl border border-white/10 p-2 rounded-[2rem] focus-within:ring-2 focus-within:ring-amber-500 transition-all shadow-2xl">
-                        <div class="flex items-center justify-center pl-6 text-slate-400 group-focus-within:text-amber-500 transition-colors">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </div>
                         <input type="text" id="tourSearch" placeholder="Explore destinations..." 
                                class="w-full bg-transparent border-none text-white placeholder:text-slate-500 py-5 px-4 text-xl outline-none font-bold">
                     </div>
-                    <p class="text-slate-400 mt-4 text-xs font-bold uppercase tracking-widest ml-4">Popular: Jaipur, Hampi, Agra, Varanasi</p>
                 </div>
             </div>
         </section>
@@ -199,22 +201,21 @@ export function renderTours() {
       tour.tag.toLowerCase().includes(query.toLowerCase())
     );
 
-    // Render Grid with Weather Placeholders
     toursGrid.innerHTML = filtered.map((tour, idx) => `
-      <div class="group relative bg-white rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-700 overflow-hidden animate-reveal border border-slate-100/50" style="animation-delay: ${idx * 50}ms">
-        <div class="relative h-80 overflow-hidden">
+      <div id="card-${tour.id}" class="group relative bg-white rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-700 overflow-hidden animate-reveal border border-slate-100/50" style="animation-delay: ${idx * 50}ms">
+        <div class="relative h-80 overflow-hidden img-container">
           <img src="${tour.image}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
           
           <div class="absolute top-8 left-8">
-            <div id="weather-${tour.id}" class="bg-white/90 border border-white/30 px-4 py-1.5 rounded-full shadow-lg">
-              <span class="text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
+            <div id="weather-${tour.id}" class="backdrop-blur-md bg-white border border-slate-200 px-4 py-1.5 rounded-full shadow-lg">
+              <span class="text-slate-900 text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
                 🌡️ Loading...
               </span>
             </div>
           </div>
 
           <div class="absolute top-8 right-8">
-            <div class=" bg-amber-500/90 border border-amber-400 px-4 py-1.5 rounded-full shadow-2xl">
+            <div class="backdrop-blur-xl bg-amber-500/90 border border-amber-400 px-4 py-1.5 rounded-full shadow-2xl">
               <span class="text-slate-900 text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
                 ${tour.duration}
@@ -241,14 +242,26 @@ export function renderTours() {
       </div>
     `).join('');
 
-    // Update Weather After DOM is ready
+    // Update Weather & Add Recommendations
     filtered.forEach(async (tour) => {
         const temp = await getWeather(tour.location);
         const weatherEl = document.getElementById(`weather-${tour.id}`);
+        const cardEl = document.getElementById(`card-${tour.id}`);
+        const imgContainer = cardEl?.querySelector('.img-container');
+
         if (weatherEl) {
-            weatherEl.innerHTML = temp !== null ? 
-                `<span class="text-white text-[10px] font-black uppercase tracking-widest">☀️ ${temp}°C</span>` : 
-                `<span class="text-white text-[10px] font-black uppercase tracking-widest">☁️ N/A</span>`;
+            if (temp !== null) {
+                weatherEl.innerHTML = `<span class="text-slate-900 text-[10px] font-black uppercase tracking-widest">☀️ ${temp}°C</span>`;
+                
+                // Smart Recommendations
+                if (imgContainer) {
+                  if (temp > 30) injectSmartBadge(imgContainer, "🔥 Summer Special", "bg-orange-600");
+                  else if (temp < 20) injectSmartBadge(imgContainer, "🏔️ Perfect Chill", "bg-cyan-600");
+                  else if (temp >= 22 && temp <= 28) injectSmartBadge(imgContainer, "✨ Best Time to Visit", "bg-emerald-600");
+                }
+            } else {
+                weatherEl.innerHTML = `<span class="text-slate-900 text-[10px] font-black uppercase tracking-widest">☁️ N/A</span>`;
+            }
         }
     });
 
