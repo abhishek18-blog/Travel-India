@@ -105,7 +105,7 @@ export const destinations = [
   {
     id: 11,
     name:"Kaziranga National Park, Assam",
-    location: "Kanchanjuri",
+    location: "Assam",
     price: "₹19,800",
     duration: "2 Days / 1 Night",
     description: "Home to the largest population of the one-horned Indian rhinoceros.",
@@ -206,7 +206,7 @@ export function renderTours() {
           <img src="${tour.image}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
           
           <div class="absolute top-8 left-8">
-            <div id="weather-${tour.id}" class="backdrop-blur-xl bg-white/20 border border-white/30 px-4 py-1.5 rounded-full shadow-lg">
+            <div id="weather-${tour.id}" class="bg-white/90 border border-white/30 px-4 py-1.5 rounded-full shadow-lg">
               <span class="text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
                 🌡️ Loading...
               </span>
@@ -214,7 +214,7 @@ export function renderTours() {
           </div>
 
           <div class="absolute top-8 right-8">
-            <div class="backdrop-blur-xl bg-amber-500/90 border border-amber-400 px-4 py-1.5 rounded-full shadow-2xl">
+            <div class=" bg-amber-500/90 border border-amber-400 px-4 py-1.5 rounded-full shadow-2xl">
               <span class="text-slate-900 text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
                 ${tour.duration}
