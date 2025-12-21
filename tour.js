@@ -1,6 +1,6 @@
 import { renderNavbar } from './navbar.js';
 
-// 1. DATA: Added 'location' for API search
+// 1. DATA UPDATED: Added 'location' for API search
 export const destinations = [
   {
     id: 1,
@@ -140,15 +140,6 @@ async function getWeather(city) {
   }
 }
 
-// 3. HELPER: Create Recommendation Badge (ADJUSTED POSITION)
-function injectSmartBadge(container, text, colorClass) {
-  const badge = document.createElement('div');
-  // Changed bottom-8 to bottom-24 to avoid overlapping with price
-  badge.className = `absolute bottom-24 left-8 ${colorClass} text-white text-[10px] font-black uppercase px-4 py-1.5 rounded-full shadow-2xl animate-bounce z-20`;
-  badge.innerText = text;
-  container.appendChild(badge);
-}
-
 export function renderTours() {
   const app = document.querySelector('#app');
   if (!app) return;
@@ -161,7 +152,8 @@ export function renderTours() {
         <section class="relative bg-slate-900 py-32 px-6 overflow-hidden min-h-[60vh] flex items-center">
             <div class="absolute inset-0 z-0">
                 <img src="https://i0.wp.com/ambrishgupta.wordpress.com/wp-content/uploads/2020/05/unesco-world-heritage-sites-india.jpg?w=1200&h=600&ssl=1" 
-                     class="w-full h-full object-cover opacity-50" />
+                     class="w-full h-full object-cover opacity-50" 
+                     alt="Heritage Packages Background" />
                 <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px]"></div>
             </div>
 
@@ -174,9 +166,15 @@ export function renderTours() {
                 </h2>
                 <div class="max-w-3xl animate-reveal delay-200 mt-12">
                     <div class="group relative flex items-center bg-white/5 backdrop-blur-2xl border border-white/10 p-2 rounded-[2rem] focus-within:ring-2 focus-within:ring-amber-500 transition-all shadow-2xl">
+                        <div class="flex items-center justify-center pl-6 text-slate-400 group-focus-within:text-amber-500 transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
                         <input type="text" id="tourSearch" placeholder="Explore destinations..." 
                                class="w-full bg-transparent border-none text-white placeholder:text-slate-500 py-5 px-4 text-xl outline-none font-bold">
                     </div>
+                    <p class="text-slate-400 mt-4 text-xs font-bold uppercase tracking-widest ml-4">Popular: Jaipur, Hampi, Agra, Varanasi</p>
                 </div>
             </div>
         </section>
@@ -201,9 +199,10 @@ export function renderTours() {
       tour.tag.toLowerCase().includes(query.toLowerCase())
     );
 
+    // Render Grid with Weather Placeholders
     toursGrid.innerHTML = filtered.map((tour, idx) => `
-      <div id="card-${tour.id}" class="group relative bg-white rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-700 overflow-hidden animate-reveal border border-slate-100/50" style="animation-delay: ${idx * 50}ms">
-        <div class="relative h-80 overflow-hidden img-container">
+      <div class="group relative bg-white rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-700 overflow-hidden animate-reveal border border-slate-100/50" style="animation-delay: ${idx * 50}ms">
+        <div class="relative h-80 overflow-hidden">
           <img src="${tour.image}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
           
           <div class="absolute top-8 left-8">
@@ -242,25 +241,14 @@ export function renderTours() {
       </div>
     `).join('');
 
+    // Update Weather After DOM is ready with Black Text
     filtered.forEach(async (tour) => {
         const temp = await getWeather(tour.location);
         const weatherEl = document.getElementById(`weather-${tour.id}`);
-        const cardEl = document.getElementById(`card-${tour.id}`);
-        const imgContainer = cardEl?.querySelector('.img-container');
-
         if (weatherEl) {
-            if (temp !== null) {
-                weatherEl.innerHTML = `<span class="text-slate-900 text-[10px] font-black uppercase tracking-widest">☀️ ${temp}°C</span>`;
-                
-                // Moved injection here to ensure it sits on top of the UI
-                if (imgContainer) {
-                  if (temp > 30) injectSmartBadge(imgContainer, "🔥 Summer Special", "bg-orange-600");
-                  else if (temp < 20) injectSmartBadge(imgContainer, "🏔️ Perfect Chill", "bg-cyan-600");
-                  else if (temp >= 22 && temp <= 28) injectSmartBadge(imgContainer, "✨ Best Time to Visit", "bg-emerald-600");
-                }
-            } else {
-                weatherEl.innerHTML = `<span class="text-slate-900 text-[10px] font-black uppercase tracking-widest">☁️ N/A</span>`;
-            }
+            weatherEl.innerHTML = temp !== null ? 
+                `<span class="text-slate-900 text-[10px] font-black uppercase tracking-widest">☀️ ${temp}°C</span>` : 
+                `<span class="text-slate-900 text-[10px] font-black uppercase tracking-widest">☁️ N/A</span>`;
         }
     });
 
