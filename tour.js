@@ -140,11 +140,11 @@ async function getWeather(city) {
   }
 }
 
-// 3. HELPER: Create Recommendation Badge
+// 3. HELPER: Create Recommendation Badge (ADJUSTED POSITION)
 function injectSmartBadge(container, text, colorClass) {
   const badge = document.createElement('div');
-  // Positioned bottom-left of the image area
-  badge.className = `absolute bottom-8 left-8 ${colorClass} text-white text-[10px] font-black uppercase px-4 py-1.5 rounded-full shadow-2xl animate-bounce z-20`;
+  // Changed bottom-8 to bottom-24 to avoid overlapping with price
+  badge.className = `absolute bottom-24 left-8 ${colorClass} text-white text-[10px] font-black uppercase px-4 py-1.5 rounded-full shadow-2xl animate-bounce z-20`;
   badge.innerText = text;
   container.appendChild(badge);
 }
@@ -242,7 +242,6 @@ export function renderTours() {
       </div>
     `).join('');
 
-    // Update Weather & Add Recommendations
     filtered.forEach(async (tour) => {
         const temp = await getWeather(tour.location);
         const weatherEl = document.getElementById(`weather-${tour.id}`);
@@ -253,7 +252,7 @@ export function renderTours() {
             if (temp !== null) {
                 weatherEl.innerHTML = `<span class="text-slate-900 text-[10px] font-black uppercase tracking-widest">☀️ ${temp}°C</span>`;
                 
-                // Smart Recommendations
+                // Moved injection here to ensure it sits on top of the UI
                 if (imgContainer) {
                   if (temp > 30) injectSmartBadge(imgContainer, "🔥 Summer Special", "bg-orange-600");
                   else if (temp < 20) injectSmartBadge(imgContainer, "🏔️ Perfect Chill", "bg-cyan-600");
