@@ -105,7 +105,7 @@ export const destinations = [
   {
     id: 11,
     name:"Kaziranga National Park, Assam",
-    location: "Kanchanjuri",
+    location: "Assam",
     price: "₹19,800",
     duration: "2 Days / 1 Night",
     description: "Home to the largest population of the one-horned Indian rhinoceros.",
@@ -206,7 +206,7 @@ export function renderTours() {
           <img src="${tour.image}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
           
           <div class="absolute top-8 left-8">
-            <div id="weather-${tour.id}" class="backdrop-blur-md bg-white border border-slate-200 px-4 py-1.5 rounded-full shadow-lg">
+            <div id="weather-${tour.id}" class="bg-white border border-slate-200 px-4 py-1.5 rounded-full shadow-lg">
               <span class="text-slate-900 text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
                 🌡️ Loading...
               </span>
