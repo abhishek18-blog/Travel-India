@@ -105,7 +105,7 @@ export const destinations = [
   {
     id: 11,
     name:"Kaziranga National Park, Assam",
-    location: "Kanchanjuri",
+    location: "Assam",
     price: "₹19,800",
     duration: "2 Days / 1 Night",
     description: "Home to the largest population of the one-horned Indian rhinoceros.",
