@@ -99,7 +99,7 @@ export function renderHome() {
         <img src="https://media.worldnomads.com/Explore/india/kerala-backwaters-canoe-istock.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
         <div class="absolute bottom-6 left-6 md:bottom-8 md:left-8">
-          <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[10px] text-white uppercase tracking-widest mb-2 inline-block">Architecture</span>
+          <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[10px] text-white uppercase tracking-widest mb-2 inline-block">Nature</span>
           <h3 class="text-xl md:text-2xl font-bold text-white mb-1">Backwaters, Kerala</h3>
           <p class="text-white/70 text-xs md:text-sm">Experience the natural breeze of the backwaters.</p>
         </div>
